@@ -1,7 +1,6 @@
 import { ListVariant } from "./listVariant"
 import { Keys } from "./film";
 import * as CSV from 'csv-string';
-import { Z_ASCII } from "zlib";
 
 const toDate = (input: string): Date => {
     return new Date(input);
@@ -34,7 +33,7 @@ const toImdbRating = (input: string): number | null => {
 const Variants: ListVariant[] = [
     {
         header: ['position', 'const', 'created', 'modified', 'description', 'Title', 'Title type', 'Directors', 'You rated', 'IMDb Rating', 'Runtime (mins)', 'Year', 'Genres', 'Num. Votes', 'Release Date (month/day/year)', 'URL'],
-        version: 1,
+        version: "imdb_v1",
         mapper: [
             {
                 localKey: Keys.POSITION,
@@ -98,7 +97,7 @@ const Variants: ListVariant[] = [
     },
     {
         header: ['Const', 'Your Rating', 'Date Added', 'Title', 'Title Type', 'Directors', 'IMDb Rating', 'Runtime (mins)', 'Year', 'Genres', 'Num Votes'],
-        version: 2,
+        version: "imdb_v2",
         mapper: [
             {
                 localKey: Keys.ID
@@ -141,7 +140,7 @@ const Variants: ListVariant[] = [
     },
     {
         header: ['Position', 'Const', 'Created', 'Modified', 'Description', 'Title', 'URL', 'Title Type', 'IMDb Rating', 'Runtime (mins)', 'Year', 'Genres', 'Num Votes', 'Release Date', 'Directors', 'Your Rating', 'Date Rated'],
-        version: 3,
+        version: "imdb_v3",
         mapper: [
             {
                 localKey: Keys.POSITION,
@@ -210,7 +209,7 @@ const Variants: ListVariant[] = [
     },
     {
         header: ['Position','Const','Created','Modified','Description','Title','URL','Title Type','IMDb Rating','Runtime (mins)','Year','Genres','Num Votes','Release Date','Directors'],
-        version: 4,
+        version: "imdb_v4",
         mapper: [
             {
                 localKey: Keys.POSITION,

@@ -44,7 +44,10 @@ const validateUrl = (url: string): MatchedUrl => {
  */
 const getListLinkFromWatchlist = async (url: string): Promise<string> => {
     try {
+        const startTime = Date.now()
         const response = await axios.get(url)
+        const endTime = Date.now()
+        console.log(`Execution time: ${endTime - startTime} ms`)
         const searcher = "<meta property=\"pageId\" content=\"" //TODO not found
         let annen: string = response.data
         const index = annen.search(searcher)
@@ -73,7 +76,6 @@ const getListLinkFromWatchlist = async (url: string): Promise<string> => {
 
 const makeWatchlistFetchingUrl = (url: string): string => {
     if (url.match(/^ur\d+$/)) {
-        console.log("asd")
         return "https://www.imdb.com/user/" + url + "/watchlist"
     }
     if (!url.endsWith("watchlist") && !url.endsWith("watchlist/")) {

@@ -1,0 +1,42 @@
+Const,Your Rating,Date Added,Title,Title Type,Directors,IMDb Rating,Runtime (mins),Year,Genres,Num Votes
+tt0100405,6,Fri Jul 17 14:06:03 UTC 2015,Pretty Woman,movie,Garry Marshall,7.0,119,1990,"Comedy, Romance",234910
+tt1007029,7,Tue Jul 28 12:55:12 UTC 2015,The Iron Lady,movie,Phyllida Lloyd,6.4,105,2011,"Biography, Drama",89371
+tt0100827,6,Sun Oct 08 20:11:32 UTC 2017,Due occhi diabolici,movie,"Dario Argento, George A. Romero",6.1,120,1990,Horror,4786
+tt1013753,7,Thu Jul 16 13:00:07 UTC 2015,Milk,movie,Gus Van Sant,7.6,128,2008,"Biography, Drama, History, Romance",146045
+tt0101414,8,Wed Jul 15 23:13:34 UTC 2015,Beauty and the Beast,movie,"Gary Trousdale, Kirk Wise",8.0,84,1991,"Animation, Family, Fantasy, Musical, Romance",347808
+tt1014759,6,Thu Jul 16 08:25:21 UTC 2015,Alice in Wonderland,movie,Tim Burton,6.5,108,2010,"Adventure, Family, Fantasy",333188
+tt1014763,6,Sun Aug 02 12:39:46 UTC 2015,Child 44,movie,Daniel Espinosa,6.5,137,2015,"Crime, Drama, Thriller",51079
+tt1019452,4,Tue Feb 21 08:44:17 UTC 2017,A Serious Man,movie,"Ethan Coen, Joel Coen",7.0,106,2009,"Comedy, Drama",110762
+tt1022603,6,Fri Jul 17 14:11:26 UTC 2015,(500) Days of Summer,movie,Marc Webb,7.7,95,2009,"Comedy, Drama, Romance",410138
+tt1023111,6,Mon Aug 03 21:34:11 UTC 2015,Never Back Down,movie,Jeff Wadlow,6.6,110,2008,"Action, Drama, Sport",85866
+tt1024648,8,Wed Jul 15 23:36:00 UTC 2015,Argo,movie,Ben Affleck,7.7,120,2012,"Biography, Drama, History, Thriller",494192
+tt0102510,7,Wed Dec 21 22:14:40 UTC 2016,The Naked Gun 2½: The Smell of Fear,movie,David Zucker,6.8,85,1991,"Comedy, Crime",89649
+tt1027718,6,Sat Aug 01 18:21:50 UTC 2015,Wall Street: Money Never Sleeps,movie,Oliver Stone,6.2,133,2010,Drama,88900
+tt1028532,8,Thu Jul 16 00:18:45 UTC 2015,Hachi: A Dog's Tale,movie,Lasse Hallström,8.1,93,2009,"Drama, Family",188453
+tt0102926,8,Wed Jul 15 11:39:18 UTC 2015,The Silence of the Lambs,movie,Jonathan Demme,8.6,118,1991,"Crime, Drama, Thriller",998132
+tt0103064,9,Wed Jul 15 11:40:45 UTC 2015,Terminator 2: Judgment Day,movie,James Cameron,8.5,137,1991,"Action, Sci-Fi, Thriller",819039
+tt1032755,7,Sun Jan 17 17:45:17 UTC 2016,RocknRolla,movie,Guy Ritchie,7.3,114,2008,"Action, Crime, Thriller",208168
+tt1033575,6,Thu Jul 16 00:08:04 UTC 2015,The Descendants,movie,Alexander Payne,7.3,115,2011,"Comedy, Drama",214387
+tt0103359,10,Wed Jul 15 23:48:19 UTC 2015,Batman: The Animated Series,tvSeries,,9.0,23,1992,"Animation, Action, Adventure, Family, Sci-Fi",62740
+tt1033643,6,Sun Jul 19 14:34:32 UTC 2015,What Happens in Vegas,movie,Tom Vaughan,6.1,99,2008,"Comedy, Romance",149558
+tt0103373,7,Mon Sep 14 19:03:33 UTC 2015,Bobby's World,tvSeries,,7.4,30,1990,"Animation, Family",3190
+tt1034032,6,Sun Jul 19 14:14:22 UTC 2015,Gamer,movie,"Mark Neveldine, Brian Taylor",5.8,95,2009,"Action, Sci-Fi, Thriller",118928
+tt0103408,7,Sun Sep 20 17:50:47 UTC 2015,Eek! the Cat,tvSeries,,7.4,30,1992,"Animation, Comedy, Family",2269
+tt0103584,8,Sun Jan 17 17:32:36 UTC 2016,X-Men,tvSeries,,8.5,23,1992,"Animation, Action, Family, Sci-Fi, Thriller",28875
+tt0103639,7,Wed Jul 15 23:33:51 UTC 2015,Aladdin,movie,"Ron Clements, John Musker",8.0,90,1992,"Animation, Adventure, Comedy, Family, Fantasy, Musical, Romance",289086
+tt1037705,6,Fri Apr 29 11:31:06 UTC 2016,The Book of Eli,movie,"Albert Hughes, Allen Hughes",6.9,118,2010,"Action, Adventure, Drama, Thriller",247880
+tt0103776,7,Sun Sep 13 11:58:53 UTC 2015,Batman Returns,movie,Tim Burton,7.0,126,1992,"Action, Adventure",233382
+tt0103874,9,Thu Jul 16 12:46:58 UTC 2015,Dracula,movie,Francis Ford Coppola,7.5,128,1992,Horror,156916
+tt1038919,6,Sun Jul 19 14:34:52 UTC 2015,The Bounty Hunter,movie,Andy Tennant,5.5,110,2010,"Action, Comedy, Romance",104347
+tt0103939,7,Wed Jun 22 15:27:03 UTC 2016,Chaplin,movie,Richard Attenborough,7.6,143,1992,"Biography, Comedy, Drama",46185
+tt1041829,7,Thu Jul 16 13:10:01 UTC 2015,The Proposal,movie,Anne Fletcher,6.7,108,2009,"Comedy, Drama, Romance",248873
+tt0104257,7,Thu Jul 16 12:54:54 UTC 2015,A Few Good Men,movie,Rob Reiner,7.7,138,1992,"Drama, Thriller",197170
+tt0104348,7,Sun May 15 16:31:31 UTC 2016,Glengarry Glen Ross,movie,James Foley,7.8,100,1992,"Crime, Drama, Mystery",82832
+tt0104431,6,Thu Jul 16 08:23:12 UTC 2015,Home Alone 2: Lost in New York,movie,Chris Columbus,6.6,120,1992,"Adventure, Comedy, Family",228689
+tt1045658,8,Thu Jul 16 00:01:52 UTC 2015,Silver Linings Playbook,movie,David O. Russell,7.8,122,2012,"Comedy, Drama, Romance",578835
+tt0104691,8,Wed Aug 31 21:39:12 UTC 2016,The Last of the Mohicans,movie,Michael Mann,7.8,112,1992,"Action, Adventure, Drama, Romance, War",123803
+tt0104714,7,Thu Jul 16 13:00:09 UTC 2015,Lethal Weapon 3,movie,Richard Donner,6.7,118,1992,"Action, Crime, Thriller",136908
+tt0104797,8,Thu Apr 28 01:38:02 UTC 2016,Malcolm X,movie,Spike Lee,7.7,202,1992,"Biography, Drama, History, Romance",69412
+tt1049413,9,Wed Jul 15 23:05:30 UTC 2015,Up,movie,"Pete Docter, Bob Peterson",8.3,96,2009,"Animation, Adventure, Comedy, Family",748916
+tt0104952,8,Tue Aug 15 17:01:07 UTC 2017,My Cousin Vinny,movie,Jonathan Lynn,7.5,120,1992,"Comedy, Crime",89155
+tt0105236,9,Wed Jul 15 11:42:34 UTC 2015,Reservoir Dogs,movie,Quentin Tarantino,8.3,99,1992,"Crime, Drama, Thriller",740668

@@ -1,5 +1,5 @@
 import { exportsForTests } from "../src/fetcher";
-const { validateUrl, getListLinkFromWatchlist, makeUrl } = exportsForTests;
+const { validateUrl, getListLinkFromWatchlist, makeUrl, makeWatchlistFetchingUrl } = exportsForTests;
 const validUrls = [
     {
         url: "https://www.imdb.com/list/ls092123/",
@@ -75,7 +75,7 @@ describe('testing URL validation', () => {
     });
     test('should accept valid URLs', () => {
         validUrls.forEach(url => {
-            expect(validateUrl(url.url)).toStrictEqual({ matched: true, listType: url.listType });
+            expect(validateUrl(url.url)).toStrictEqual({ matched: true, listType: url.listType, url: url.url });
         });
     });
 });
@@ -98,13 +98,13 @@ describe('testing usable URL generation', () => {
         expect(await makeUrl("https://imdb.com/list/ls092287578/")).toBe(expectedListUrl);
         expect(await makeUrl("www.imdb.com/list/ls092287578/")).toBe(expectedListUrl);
     });
-    jest.setTimeout(10000); // FIXME mock this
-    test("get the correct URL from user profile URL without watchlist prefix", async () => {
-        expect(await makeUrl("www.imdb.com/user/ur115031818")).toBe(expectedListUrl);
-        expect(await makeUrl("www.imdb.com/user/ur115031818/")).toBe(expectedListUrl);
+});
+describe("testing watchlist URL makery", () => {
+    test("should make proper URL out of user identifier", () => {
+        expect(makeWatchlistFetchingUrl("ur123")).toBe("https://www.imdb.com/user/ur123/watchlist");
     });
-    test("get the correct URL from user profile URL", async () => {
-        expect(await makeUrl("www.imdb.com/user/ur115031818/watchlist")).toBe(expectedListUrl);
-        expect(await makeUrl("www.imdb.com/user/ur115031818/watchlist/")).toBe(expectedListUrl);
+    test("should add 'watchlist' at the end", () => {
+        expect(makeWatchlistFetchingUrl("https://www.imdb.com/user/ur123")).toBe("https://www.imdb.com/user/ur123/watchlist");
+        expect(makeWatchlistFetchingUrl("https://www.imdb.com/user/ur123/")).toBe("https://www.imdb.com/user/ur123/watchlist");
     });
 });

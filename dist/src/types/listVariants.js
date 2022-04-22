@@ -30,7 +30,7 @@ const toImdbRating = (input) => {
 const Variants = [
     {
         header: ['position', 'const', 'created', 'modified', 'description', 'Title', 'Title type', 'Directors', 'You rated', 'IMDb Rating', 'Runtime (mins)', 'Year', 'Genres', 'Num. Votes', 'Release Date (month/day/year)', 'URL'],
-        version: 1,
+        version: "imdb_v1",
         mapper: [
             {
                 localKey: Keys.POSITION,
@@ -94,7 +94,7 @@ const Variants = [
     },
     {
         header: ['Const', 'Your Rating', 'Date Added', 'Title', 'Title Type', 'Directors', 'IMDb Rating', 'Runtime (mins)', 'Year', 'Genres', 'Num Votes'],
-        version: 2,
+        version: "imdb_v2",
         mapper: [
             {
                 localKey: Keys.ID
@@ -137,7 +137,7 @@ const Variants = [
     },
     {
         header: ['Position', 'Const', 'Created', 'Modified', 'Description', 'Title', 'URL', 'Title Type', 'IMDb Rating', 'Runtime (mins)', 'Year', 'Genres', 'Num Votes', 'Release Date', 'Directors', 'Your Rating', 'Date Rated'],
-        version: 3,
+        version: "imdb_v3",
         mapper: [
             {
                 localKey: Keys.POSITION,
@@ -206,7 +206,7 @@ const Variants = [
     },
     {
         header: ['Position', 'Const', 'Created', 'Modified', 'Description', 'Title', 'URL', 'Title Type', 'IMDb Rating', 'Runtime (mins)', 'Year', 'Genres', 'Num Votes', 'Release Date', 'Directors'],
-        version: 4,
+        version: "imdb_v4",
         mapper: [
             {
                 localKey: Keys.POSITION,

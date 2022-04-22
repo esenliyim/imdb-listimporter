@@ -1,4 +1,3 @@
-import axios, { AxiosError } from "axios";
 import { exportsForTests } from "../src/fetcher";
 
 const { validateUrl, getListLinkFromWatchlist, makeUrl, makeWatchlistFetchingUrl } = exportsForTests

@@ -2,11 +2,11 @@ import axios from "axios";
 const patterns = [
     {
         listType: "list",
-        exp: /^(https:\/\/)?(www.)?imdb.com\/list\/ls\d+\/?\b/g
+        exp: /^(https:\/\/)?(www.)?imdb.com\/list\/ls\d+\/?$/g
     },
     {
         listType: "watchlist",
-        exp: /^(https:\/\/)?(www.)?imdb.com\/user\/ur\d+(\/?(watchlist\/?)?)\b/g
+        exp: /^(https:\/\/)?(www.)?imdb.com\/user\/ur\d+(\/?(watchlist\/?)?)$/g
     },
 ];
 /**
@@ -41,7 +41,10 @@ const validateUrl = (url) => {
  */
 const getListLinkFromWatchlist = async (url) => {
     try {
+        const startTime = Date.now();
         const response = await axios.get(url);
+        const endTime = Date.now();
+        console.log(`Execution time: ${endTime - startTime} ms`);
         const searcher = "<meta property=\"pageId\" content=\""; //TODO not found
         let annen = response.data;
         const index = annen.search(searcher);
@@ -72,11 +75,14 @@ const getListLinkFromWatchlist = async (url) => {
     }
 };
 const makeWatchlistFetchingUrl = (url) => {
+    if (url.match(/^ur\d+$/)) {
+        return "https://www.imdb.com/user/" + url + "/watchlist";
+    }
     if (!url.endsWith("watchlist") && !url.endsWith("watchlist/")) {
         if (!url.endsWith("/")) {
             url += "/";
         }
-        url += "watchlist";
+        return prependHttpsAndWww(url + "watchlist");
     }
     return url;
 };
@@ -109,7 +115,7 @@ export const makeRequest = async (url) => {
             return Promise.reject("Invalid URL");
         }
         if (validatedUrl.listType === "watchlist") {
-            const listId = await getListLinkFromWatchlist(prependHttpsAndWww(makeWatchlistFetchingUrl(validatedUrl.url)));
+            const listId = await getListLinkFromWatchlist(makeWatchlistFetchingUrl(validatedUrl.url));
             url = "https://www.imdb.com/list/" + listId;
         }
         const madeUrl = await makeUrl(url);
@@ -120,5 +126,5 @@ export const makeRequest = async (url) => {
     }
 };
 export const exportsForTests = {
-    validateUrl, getListLinkFromWatchlist, makeUrl, makeWatchlistFetchingUrl, prependHttpsAndWww
+    validateUrl, getListLinkFromWatchlist, makeUrl, makeWatchlistFetchingUrl
 };

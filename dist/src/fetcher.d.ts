@@ -6,5 +6,4 @@ export declare const exportsForTests: {
     getListLinkFromWatchlist: (url: string) => Promise<string>;
     makeUrl: (url: string) => Promise<string>;
     makeWatchlistFetchingUrl: (url: string) => string;
-    prependHttpsAndWww: (url: string) => string;
 };

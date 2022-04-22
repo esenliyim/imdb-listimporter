@@ -2,7 +2,7 @@ import { Keys } from "./film";
 
 export interface ListVariant {
     header: string[];
-    version: number;
+    version: string;
     mapper: KeyMap[];
 }
 
