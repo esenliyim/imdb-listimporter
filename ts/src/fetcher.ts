@@ -4,11 +4,31 @@ import { MatchedUrl, ImdbUrlPattern } from "./types/urlUtils"
 const patterns: ImdbUrlPattern[] = [
     {
         listType: "list",
-        exp: /^(https:\/\/)?(www.)?imdb.com\/list\/ls\d+\/?$/g
+        exp: /^(https:\/\/)?(www.)?imdb.com\/list\/ls\d+\/?$/g,
+        converter: (input: string): string => {
+            return prependHttpsAndWww(input)
+        }
     },
     {
         listType: "watchlist",
-        exp: /^(https:\/\/)?(www.)?imdb.com\/user\/ur\d+(\/?(watchlist\/?)?)$/g
+        exp: /^(https:\/\/)?(www.)?imdb.com\/user\/ur\d+(\/?(watchlist\/?)?)$/g,
+        converter: (input: string): string => {
+            return prependHttpsAndWww(makeWatchlistFetchingUrl(input))
+        }
+    },
+    {
+        listType: "watchlist",
+        exp: /^ur\d+$/g,
+        converter: (input: string): string => {
+            return prependHttpsAndWww(makeWatchlistFetchingUrl(input))
+        }
+    },
+    {
+        listType: "list",
+        exp: /^ls\d+$/g,
+        converter: (input: string): string => {
+            return "https://www.imdb.com/list/" + input
+        }
     },
 ]
 
@@ -28,7 +48,7 @@ const validateUrl = (url: string): MatchedUrl => {
             matchedUrl = {
                 matched: true,
                 listType: pattern.listType,
-                url: url,
+                url: pattern.converter(url),
             }
             return false
         }
@@ -44,10 +64,7 @@ const validateUrl = (url: string): MatchedUrl => {
  */
 const getListLinkFromWatchlist = async (url: string): Promise<string> => {
     try {
-        const startTime = Date.now()
         const response = await axios.get(url)
-        const endTime = Date.now()
-        console.log(`Execution time: ${endTime - startTime} ms`)
         const searcher = "<meta property=\"pageId\" content=\"" //TODO not found
         let annen: string = response.data
         const index = annen.search(searcher)
@@ -74,18 +91,31 @@ const getListLinkFromWatchlist = async (url: string): Promise<string> => {
     }
 }
 
-const makeWatchlistFetchingUrl = (url: string): string => {
-    if (url.match(/^ur\d+$/)) {
-        return "https://www.imdb.com/user/" + url + "/watchlist"
+/**
+ * Generate a URL to be used for fetching the list ID
+ * 
+ * @param input either a user ID, a URL leading to the user profile, or to the <profile>/watchlist route 
+ * @returns a fully formed URL that leads to the <profile>/watchlist route
+ */
+const makeWatchlistFetchingUrl = (input: string): string => {
+    if (input.match(/^ur\d+$/)) {
+        return "https://www.imdb.com/user/" + input + "/watchlist"
     }
-    if (!url.endsWith("watchlist") && !url.endsWith("watchlist/")) {
-        if (!url.endsWith("/")) {
-            url += "/"
+    if (!input.endsWith("watchlist") && !input.endsWith("watchlist/")) {
+        if (!input.endsWith("/")) {
+            input += "/"
         }
-        return prependHttpsAndWww(url + "watchlist")
-    } return url
+        return prependHttpsAndWww(input + "watchlist")
+    } 
+    return input
 }
 
+/**
+ * Makes sure the URL starts with 'https://www.'
+ * 
+ * @param url a URL that may or may not be missing https and/or www at the beginning
+ * @returns a URL that definitely is not missing https and/or www at the beginning
+ */
 const prependHttpsAndWww = (url: string): string => {
     if (url.startsWith("imdb.com")) {
         url = "https://www." + url
@@ -104,7 +134,7 @@ const prependHttpsAndWww = (url: string): string => {
  * @returns the export URL to be fetched from
  */
 const makeUrl = async (url: string): Promise<string> => {
-    url = prependHttpsAndWww(url)
+    // url = prependHttpsAndWww(url)
     return url.endsWith("/") ? url + "export" : url + "/export"
 }
 
@@ -115,15 +145,19 @@ export const makeRequest = async (url: string): Promise<AxiosResponse> => {
             return Promise.reject("Invalid URL")
         }
         if (validatedUrl.listType === "watchlist") {
-            const listId = await getListLinkFromWatchlist(makeWatchlistFetchingUrl(validatedUrl.url!))
-            url = "https://www.imdb.com/list/" + listId
-        }
-        const madeUrl = await makeUrl(url)
+            const listId = await getListLinkFromWatchlist(validatedUrl.url!)
+            validatedUrl.url = "https://www.imdb.com/list/" + listId
+        } 
+        const madeUrl = await makeUrl(validatedUrl.url!)
         return axios.get(madeUrl)
     } catch (error) {
         return Promise.reject(error)
     }
 }
+
+/**
+ * exports for testing purposes, not meant to be used externally. Ugly hack but alas...
+ */
 export const exportsForTests = {
     validateUrl, getListLinkFromWatchlist, makeUrl, makeWatchlistFetchingUrl
 }

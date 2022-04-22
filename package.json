@@ -13,20 +13,31 @@
   },
   "name": "imdb-listimporter",
   "version": "0.1.0",
-  "description": "Import lists from IMDb, parsed into objects if you want.",
-  "main": "index.js",
+  "description": "Import lists from IMDb.",
+  "main": "src/index.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prepub": "rm -rf dist && tsc && cp package.json LICENSE.txt README.md dist",
+    "pub": "cd dist && npm pack"
   },
   "keywords": [
     "imdb",
     "watchlist",
+    "list",
+    "film",
+    "movie",
     "import",
     "IMDB"
   ],
-  "author": "Emre Senliyim",
-  "license": "ISC"
+  "author": "Emre Senliyim <esenliyim@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/esenliyim/imdb-listimporter",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/esenliyim/imdb-listimporter.git"
+  },
+  "type": "module"
 }

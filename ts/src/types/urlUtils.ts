@@ -9,4 +9,5 @@ export interface MatchedUrl {
 export interface ImdbUrlPattern {
     listType: ListTypes;
     exp: RegExp;
+    converter: (input: string) => string 
 }

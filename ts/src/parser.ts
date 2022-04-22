@@ -4,6 +4,12 @@ import Variants from "./types/listVariants";
 import * as CSV from 'csv-string';
 import ParserOptions from "./types/parserOptions";
 
+/**
+ * Detects which IMDb export template is being used
+ * 
+ * @param header the header line of the input data
+ * @returns the detected variant or null
+ */
 const detectVersion = (header: string[]): ListVariant | null => {
     const stringifiedHeader = CSV.stringify(header).trim();
     let foundVariant = null;
@@ -18,8 +24,15 @@ const detectVersion = (header: string[]): ListVariant | null => {
     return foundVariant;
 }
 
-const parse = (response: string, options: ParserOptions = { marshal: true }): Film[] | string[][] => {
-    const records = CSV.parse(response)
+/**
+ * Parses the input string into either an array of Film or a 2D array of strings
+ * 
+ * @param input a string that must be a valid CSV
+ * @param options parsing options
+ * @returns either an array of Film or a 2D array of strings
+ */
+const parse = (input: string, options: ParserOptions = { marshal: true }): Film[] | string[][] => {
+    const records = CSV.parse(input)
     const version = detectVersion(records.shift()!)
 
     if (version) {

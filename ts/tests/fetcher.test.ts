@@ -5,56 +5,79 @@ const { validateUrl, getListLinkFromWatchlist, makeUrl, makeWatchlistFetchingUrl
 interface ValidUrl {
     url: string;
     listType: "list" | "watchlist";
+    expected: string;
 }
 
 const validUrls: ValidUrl[] = [
     {
         url: "https://www.imdb.com/list/ls092123/",
-        listType: "list"
+        listType: "list",
+        expected: "https://www.imdb.com/list/ls092123/",
     },
     {
         url: "https://www.imdb.com/list/ls092123",
-        listType: "list"
+        listType: "list",
+        expected: "https://www.imdb.com/list/ls092123",
     },
     {
         url: "www.imdb.com/list/ls092123/",
-        listType: "list"
+        listType: "list",
+        expected: "https://www.imdb.com/list/ls092123/",
     },
     {
         url: "https://imdb.com/list/ls092123/",
-        listType: "list"
+        listType: "list",
+        expected: "https://www.imdb.com/list/ls092123/",
     },
     {
         url: "imdb.com/list/ls092123/",
-        listType: "list"
+        listType: "list",
+        expected: "https://www.imdb.com/list/ls092123/",
     },
     {
         url: "https://www.imdb.com/user/ur115031818/watchlist",
-        listType: "watchlist"
+        listType: "watchlist",
+        expected: "https://www.imdb.com/user/ur115031818/watchlist",
     },
     {
         url: "https://www.imdb.com/user/ur115031818/watchlist/",
-        listType: "watchlist"
+        listType: "watchlist",
+        expected: "https://www.imdb.com/user/ur115031818/watchlist/",
     },
     {
         url: "imdb.com/user/ur115031818/watchlist",
-        listType: "watchlist"
+        listType: "watchlist",
+        expected: "https://www.imdb.com/user/ur115031818/watchlist",
     },
     {
         url: "https://imdb.com/user/ur115031818/watchlist",
-        listType: "watchlist"
+        listType: "watchlist",
+        expected: "https://www.imdb.com/user/ur115031818/watchlist",
     },
     {
         url: "www.imdb.com/user/ur115031818/watchlist",
-        listType: "watchlist"
+        listType: "watchlist",
+        expected: "https://www.imdb.com/user/ur115031818/watchlist",
     },
     {
         url: "www.imdb.com/user/ur115031818",
-        listType: "watchlist"
+        listType: "watchlist",
+        expected: "https://www.imdb.com/user/ur115031818/watchlist",
     },
     {
         url: "www.imdb.com/user/ur115031818/",
-        listType: "watchlist"
+        listType: "watchlist",
+        expected: "https://www.imdb.com/user/ur115031818/watchlist",
+    },
+    {
+        url: "ur115031818",
+        listType: "watchlist",
+        expected: "https://www.imdb.com/user/ur115031818/watchlist",
+    },
+    {
+        url: "ls092123",
+        listType: "list",
+        expected: "https://www.imdb.com/list/ls092123",
     },
 ]
 
@@ -84,7 +107,7 @@ describe('testing URL validation', () => {
     });
     test('should accept valid URLs', () => {
         validUrls.forEach(url => {
-            expect(validateUrl(url.url)).toStrictEqual({matched: true, listType: url.listType, url: url.url})
+            expect(validateUrl(url.url)).toStrictEqual({matched: true, listType: url.listType, url: url.expected})
         })
     });
 })
@@ -103,11 +126,6 @@ describe('testing usable URL generation', () => {
     test("missing 'export' at the end gets correctly added to list URL", async () => {
         expect(await makeUrl("https://www.imdb.com/list/ls092287578")).toBe(expectedListUrl)
         expect(await makeUrl("https://www.imdb.com/list/ls092287578/")).toBe(expectedListUrl)
-    });
-    test("missing https and www get added", async () => {
-        expect(await makeUrl("imdb.com/list/ls092287578")).toBe(expectedListUrl)
-        expect(await makeUrl("https://imdb.com/list/ls092287578/")).toBe(expectedListUrl)
-        expect(await makeUrl("www.imdb.com/list/ls092287578/")).toBe(expectedListUrl)
     });
 })
 
