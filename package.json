@@ -4,6 +4,28 @@
     "csv-string": "^4.1.0"
   },
   "devDependencies": {
-    "@types/node": "^17.0.25"
-  }
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.25",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.4",
+    "typescript": "^4.6.3"
+  },
+  "name": "imdb-listimporter",
+  "version": "0.1.0",
+  "description": "Import lists from IMDb, parsed into objects if you want.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "imdb",
+    "watchlist",
+    "import",
+    "IMDB"
+  ],
+  "author": "Emre Senliyim",
+  "license": "ISC"
 }
