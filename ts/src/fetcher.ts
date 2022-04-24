@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios"
-import { MatchedUrl, ImdbUrlPattern } from "./types/urlUtils"
+import { MatchedUrl, ImdbUrlPattern } from "./types/urlUtils.js"
 import { DOMParser } from '@xmldom/xmldom'
 
 const patterns: ImdbUrlPattern[] = [
@@ -168,6 +168,7 @@ export const makeRequest = async (url: string): Promise<string> => {
             validatedUrl.url = "https://www.imdb.com/list/" + listId
         }
         const madeUrl = makeUrl(validatedUrl.url!)
+        console.log(madeUrl)
         const resp = await axios.get(madeUrl)
         return resp.data
     } catch (error) {
@@ -181,6 +182,9 @@ export const makeRequest = async (url: string): Promise<string> => {
         return Promise.reject(error)
     }
 }
+
+// module.exports.default = makeRequest
+export default makeRequest
 
 /**
  * exports for testing purposes, not meant to be used externally. Ugly hack but alas...

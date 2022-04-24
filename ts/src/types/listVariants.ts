@@ -1,5 +1,5 @@
-import { ListVariant } from "./listVariant"
-import { Keys } from "./film";
+import { ListVariant } from "./listVariant.js"
+import { Keys } from "./film.js";
 import * as CSV from 'csv-string';
 
 const toDate = (input: string): Date => {

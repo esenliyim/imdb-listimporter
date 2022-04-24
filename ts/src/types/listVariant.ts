@@ -1,4 +1,4 @@
-import { Keys } from "./film";
+import { Keys } from "./film.js";
 
 export interface ListVariant {
     header: string[];

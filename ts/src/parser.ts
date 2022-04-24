@@ -1,8 +1,8 @@
-import { Film } from "./types/film";
-import { ListVariant, PossibleReturns } from "./types/listVariant";
-import Variants from "./types/listVariants";
+import { Film } from "./types/film.js";
+import { ListVariant } from "./types/listVariant.js";
+import Variants from "./types/listVariants.js";
 import * as CSV from 'csv-string';
-import ParserOptions from "./types/parserOptions";
+import ParserOptions from "./types/parserOptions.js";
 
 /**
  * Detects which IMDb export template is being used
@@ -62,8 +62,8 @@ const parse = (input: string, options: ParserOptions = { marshal: true }): Film[
         return []
     }
 }
-
 export default parse
+
 export const exportsForTests = {
     detectVersion
 }
