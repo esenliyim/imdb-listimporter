@@ -1,6 +1,9 @@
 # imdb-listimporter
 
-Axios-based IMDb list importer.
+Axios-based IMDb list importer for node.
+## About
+
+The `imdb-listimporter` package allows you to import the contents of publicly visible user lists from IMDb.
 
 ## Features 
 

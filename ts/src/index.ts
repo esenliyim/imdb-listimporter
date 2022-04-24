@@ -20,7 +20,7 @@ import ParserOptions from "./types/parserOptions";
 const importList = async (input: string, options: ParserOptions = {marshal: true}): Promise<Film[] | string[][]> => {
     try {
         const response = await makeRequest(input)
-        return parse(response.data, options)
+        return parse(response, options)
     } catch (error) {
         return Promise.reject(error)
     }

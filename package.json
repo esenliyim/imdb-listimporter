@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@xmldom/xmldom": "^0.8.2",
     "axios": "^0.26.1",
     "csv-string": "^4.1.0"
   },
@@ -36,8 +37,7 @@
   "license": "MIT",
   "homepage": "https://github.com/esenliyim/imdb-listimporter",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/esenliyim/imdb-listimporter.git"
-  },
-  "type": "module"
+    "type": "git",
+    "url": "https://github.com/esenliyim/imdb-listimporter.git"
+  }
 }

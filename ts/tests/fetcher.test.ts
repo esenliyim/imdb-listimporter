@@ -1,6 +1,7 @@
 import { exportsForTests } from "../src/fetcher";
+import { readFileSync } from "fs";
 
-const { validateUrl, getListLinkFromWatchlist, makeUrl, makeWatchlistFetchingUrl } = exportsForTests
+const { validateUrl, getListLinkFromWatchlist, makeUrl, makeWatchlistFetchingUrl, extractListId } = exportsForTests
 
 interface ValidUrl {
     url: string;
@@ -81,8 +82,10 @@ const validUrls: ValidUrl[] = [
     },
 ]
 
-const expectedListId = "ls092287578";
-const expectedListUrl = "https://www.imdb.com/list/ls092287578/export"
+const expectedListId = "EXPECTED_ID";
+const expectedListUrl = "https://www.imdb.com/list/ls092287578/export";
+const samplePublicPath = "ts/tests/data/samplePublicWatchlist.html";
+const samplePrivatePath = "ts/tests/data/samplePrivateWatchlist.html";
 
 describe('testing URL validation', () => {
     test('empty URL should return false', () => {
@@ -112,20 +115,25 @@ describe('testing URL validation', () => {
     });
 })
 
-describe('testing watchlist URL fetchery', () => {
-    test('valid public watchlist link should yield correct ID', async () => {
-        const res = await getListLinkFromWatchlist("https://www.imdb.com/user/ur115031818/watchlist")
-        expect(res).toStrictEqual(expectedListId)
+describe('testing watchlist listId extraction', () => {
+    test('should extract correct ID from public watchlist html response', () => {
+        const sampleHtml = readFileSync(samplePublicPath, 'utf-8');
+        const res = extractListId(sampleHtml)
+        expect(res[0]).toBeTruthy();
+        expect(res[1]).toStrictEqual(expectedListId)
     });
-    test('invalid URL private watchlist should return 404', async () => {
-        expect(getListLinkFromWatchlist("https://www.imdb.com/list/ls511803374/watchlist")).rejects.toEqual("404 error")
+    test('should detect private watchlist', () => {
+        const sampleHtml = readFileSync(samplePrivatePath, 'utf-8');
+        const res = extractListId(sampleHtml)
+        expect(res[0]).toBeFalsy()
+        expect(res[1]).toStrictEqual("watchlist is private")
     });
 })
 
 describe('testing usable URL generation', () => {
-    test("missing 'export' at the end gets correctly added to list URL", async () => {
-        expect(await makeUrl("https://www.imdb.com/list/ls092287578")).toBe(expectedListUrl)
-        expect(await makeUrl("https://www.imdb.com/list/ls092287578/")).toBe(expectedListUrl)
+    test("missing 'export' at the end gets correctly added to list URL", () => {
+        expect(makeUrl("https://www.imdb.com/list/ls092287578")).toBe(expectedListUrl)
+        expect(makeUrl("https://www.imdb.com/list/ls092287578/")).toBe(expectedListUrl)
     });
 })
 

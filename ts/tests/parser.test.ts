@@ -3,7 +3,7 @@ import Variants from "../src/types/listVariants";
 import * as CSV from "csv-string"
 import fs from "fs"
 import parse from "../src/parser";
-import {Film, Keys} from "../src/types/film"
+import { Keys } from "../src/types/film"
 
 const { detectVersion } = exportsForTests
 
@@ -43,7 +43,7 @@ describe("testing variant rejection", () => {
         expect(detectVersion(["asd", "ifhjas"])).toBe(null)
     })
     test("should reject incorrect array", () => {
-        expect(detectVersion(['Position','Const','Created','Modified','Description','Title','URL','Title Type','IMDb Rating','Runtime (mins)','Year','Genres','Num Votes'])).toBe(null)
+        expect(detectVersion(['Position', 'Const', 'Created', 'Modified', 'Description', 'Title', 'URL', 'Title Type', 'IMDb Rating', 'Runtime (mins)', 'Year', 'Genres', 'Num Votes'])).toBe(null)
     })
     test("should reject incorrect array", () => {
         expect(detectVersion([...Variants[0].header, "asdasd"])).toBe(null)
@@ -52,21 +52,21 @@ describe("testing variant rejection", () => {
 
 describe("testing key specification", () => {
     const currentPath = process.cwd()
-    test("should only have title and ID", async () => {
+    test("should only have title and ID", () => {
         try {
             const data = fs.readFileSync(currentPath + "/ts/tests/data/" + Variants[2].version + ".csv", 'utf-8')
-            const parsed = await parse(data, {marshal: true, only: [Keys.TITLE, Keys.ID]})
+            const parsed = parse(data, { marshal: true, only: [Keys.TITLE, Keys.ID] })
             const difference = Object.keys(parsed[0]).filter(x => ![Keys.TITLE, Keys.ID].includes(x as Keys));
             expect(difference).toStrictEqual([])
         } catch (error) {
             throw error
         }
     });
-    test("should exclude title and ID", async () => {
+    test("should exclude title and ID", () => {
         try {
             const data = fs.readFileSync(currentPath + "/ts/tests/data/" + Variants[2].version + ".csv", 'utf-8')
             const toExclude = [Keys.TITLE, Keys.ID]
-            const parsed = await parse(data, {marshal: true, except: toExclude})
+            const parsed = parse(data, { marshal: true, except: toExclude })
             const difference = Object.values(Keys).filter(x => ![Keys.TITLE, Keys.ID].includes(x as Keys));
             toExclude.forEach(key => {
                 expect(Object.keys(parsed[0]).includes(key)).toBe(false)

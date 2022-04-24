@@ -1,5 +1,6 @@
-import axios, { AxiosError, AxiosResponse } from "axios"
+import axios, { AxiosError } from "axios"
 import { MatchedUrl, ImdbUrlPattern } from "./types/urlUtils"
+import { DOMParser } from '@xmldom/xmldom'
 
 const patterns: ImdbUrlPattern[] = [
     {
@@ -65,30 +66,49 @@ const validateUrl = (url: string): MatchedUrl => {
 const getListLinkFromWatchlist = async (url: string): Promise<string> => {
     try {
         const response = await axios.get(url)
-        const searcher = "<meta property=\"pageId\" content=\"" //TODO not found
-        let annen: string = response.data
-        const index = annen.search(searcher)
-        if (index < 0) {
-            return Promise.reject("Could not extract list ID")
-        }
-        const start = index + searcher.length
-        const listId = annen.substring(start, annen.indexOf("\"", start))
-        if (listId.match(/ls\d+\b/)) {
-            return listId
+        const extractionResults = extractListId(response.data)
+        if (!extractionResults[0]) {
+            return Promise.reject(extractionResults[1]);
         } else {
-            return Promise.reject("Could not extract list ID")
+            if (extractionResults[1].match(/ls\d+\b/)) {
+                return extractionResults[1]
+            } else {
+                return Promise.reject("Could not extract a valid listId")
+            }
         }
     } catch (error) {
-        if (axios.isAxiosError(error)) {
-            if (error.response?.status === 404) {
+        const err = error as Error | AxiosError
+        if (axios.isAxiosError(err)) {
+            if (err.response?.status === 404) {
                 return Promise.reject("404 error")
-            } else {
-                return Promise.reject("Something went wrong")
             }
+            return Promise.reject("Something went wrong: " + err.message)
         } else {
-            return Promise.reject("Something went wrong")
+            return Promise.reject("Something went wrong: " + err.message)
         }
     }
+}
+
+const extractListId = (data: string): [boolean, string] => {
+    const domparser = new DOMParser();
+    const doc = domparser.parseFromString(data, 'text/html');
+    if (!checkIfPublic(doc)) {
+        return [false, "watchlist is private"]
+    }
+    const metas = doc.getElementsByTagName('meta')
+    for (let i = 0; i < metas.length; i++) {
+        const meta = metas[i]
+        if (meta.attributes.item(0)!.nodeValue !== "pageId") {
+            continue
+        } else {
+            return [true, meta.attributes.item(1)!.textContent!]
+        }
+    }
+    return [false, "could not extract listID"]
+}
+
+const checkIfPublic = (doc: Document): boolean => {
+    return doc.getElementById("unavailable") ? false : true
 }
 
 /**
@@ -106,7 +126,7 @@ const makeWatchlistFetchingUrl = (input: string): string => {
             input += "/"
         }
         return prependHttpsAndWww(input + "watchlist")
-    } 
+    }
     return input
 }
 
@@ -133,12 +153,11 @@ const prependHttpsAndWww = (url: string): string => {
  * @param url the input URL
  * @returns the export URL to be fetched from
  */
-const makeUrl = async (url: string): Promise<string> => {
-    // url = prependHttpsAndWww(url)
+const makeUrl = (url: string): string => {
     return url.endsWith("/") ? url + "export" : url + "/export"
 }
 
-export const makeRequest = async (url: string): Promise<AxiosResponse> => {
+export const makeRequest = async (url: string): Promise<string> => {
     try {
         const validatedUrl = validateUrl(url)
         if (!validatedUrl.matched) {
@@ -147,10 +166,18 @@ export const makeRequest = async (url: string): Promise<AxiosResponse> => {
         if (validatedUrl.listType === "watchlist") {
             const listId = await getListLinkFromWatchlist(validatedUrl.url!)
             validatedUrl.url = "https://www.imdb.com/list/" + listId
-        } 
-        const madeUrl = await makeUrl(validatedUrl.url!)
-        return axios.get(madeUrl)
+        }
+        const madeUrl = makeUrl(validatedUrl.url!)
+        const resp = await axios.get(madeUrl)
+        return resp.data
     } catch (error) {
+        const err = error as Error | AxiosError
+        if (axios.isAxiosError(err)) {
+            if (err.response?.status === 403) {
+                return Promise.reject("list is private");
+            }
+            return Promise.reject("got error code " + err.response?.status + " while trying to fetch list");
+        }
         return Promise.reject(error)
     }
 }
@@ -159,5 +186,5 @@ export const makeRequest = async (url: string): Promise<AxiosResponse> => {
  * exports for testing purposes, not meant to be used externally. Ugly hack but alas...
  */
 export const exportsForTests = {
-    validateUrl, getListLinkFromWatchlist, makeUrl, makeWatchlistFetchingUrl
+    validateUrl, getListLinkFromWatchlist, makeUrl, makeWatchlistFetchingUrl, extractListId
 }
